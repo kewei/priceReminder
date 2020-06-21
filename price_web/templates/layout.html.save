@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+  <head>
+    <title>{{ title }}</title>
+    <link rel="shortcut icon"
+	href="{{ url_for('static', filename='logo.png') }}"
+	"
+	type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet">
+    <script src="https://use.fontawesome.com/9d13596395.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+ 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+ 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+ 	<meta name="google-signin-client_id" content="53644473">
+        
+    	<script>
+	function ConfirmDelete(elem){
+		localStorage.setItem('name',$(elem).attr('name'));
+		localStorage.setItem('prod_url',$(elem).attr('prod_url'));
+		$('#deleteModal').modal();
+	}
+	function Delete(){
+		$.ajax({
+			url : '/delete_favorite',
+			data : {name:localStorage.getItem('name'), prod_url:localStorage.getItem('prod_url')},
+			type : 'POST',
+			success: function(res){
+				var result = JSON.parse(res);
+				if(result.status == 'OK'){
+					$('#deleteModal').modal('hide');
+					location.reload();
+				}
+				else{
+					alert(result.status);	
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	}
+	function Edit(elem){
+		localStorage.setItem('name',$(elem).attr('name'));
+		localStorage.setItem('prod_url',$(elem).attr('prod_url'));
+		$('#editModal').modal();
+	}
+	function Update(){
+		$.ajax({
+			url : '/update_favorite',
+			data : {name:localStorage.getItem('name'), prod_url:localStorage.getItem('prod_url'), price_min:$('#price_min').val(), price_max:$('#price_max').val()},
+			type : 'POST',
+			success: function(res){
+				var result = JSON.parse(res);
+				if(result.status == 'OK'){
+					$('#editModal').modal('hide');
+				}
+				else{
+					alert(result.status);	
+				}
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+	}
+	</script>
+	<script>
+        	var xhr;
+    		function onFailure(error) {
+      			console.log(error);
+    		}
+    		function onSignIn(googleUser) {
+  			  var profile = googleUser.getBasicProfile();
+  			  var id_token = googleUser.getAuthResponse().id_token;
+  			  xhr = new XMLHttpRequest();
+  			  xhr.open('POST', 'https://www.pricereminder.se/google_login', true);
+  			  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  			  xhr.onload = function() {
+  			    console.log('Signed in as: ' + xhr.responseText);
+  			  };
+  			  xhr.send('idtoken=' + id_token);
+  			  xhr.onreadystatechange = function(){
+  			    // process the server response
+  			    if (xhr.readyState === XMLHttpRequest.DONE) {
+      			if (xhr.status === 200) {
+        			window.location.href = ('/favorites');
+      			}
+  				}
+  			  }
+    		}
+    		function renderButton() {
+      			gapi.signin2.render('g-signin2', {
+        		'scope': 'profile email',
+        		'width': 300,
+        		'height': 30,
+        		'longtitle': true,
+        		'theme': 'dark',
+        		'onsuccess': onSignIn,
+        		'onfailure': onFailure
+      			});
+    		}
+
+  		</script>
+	<script>
+	function onLoad() {
+	      gapi.load('auth2', function() {
+	        gapi.auth2.init();
+	      });
+	    }
+  	function signOut() {
+    	var auth2 = gapi.auth2.getAuthInstance();
+    	auth2.signOut().then(function () {
+    		xhr = new XMLHttpRequest();
+			xhr.open('GET', 'https://www.pricereminder.se/logout', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send();
+      		console.log('User signed out.');
+    	});
+  	}
+	</script>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+          {% if not session.logged_in %}
+            <li role="presentation" {% if request.path == '/' %}class="active"{% endif %} ><a href="{{ url_for('register_product') }}">Home</a></li>
+            <li role="presentation" {% if request.path == '/login' %}class="active"{% endif %}><a href="{{ url_for('login') }}">Sign In</a></li>
+            <li role="presentation" {% if request.path == '/signup' %}class="active"{% endif %}><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            <li role="presentation" {% if request.path == '/about' %}class="active"{% endif %}><a href="{{ url_for('about') }}">About</a></li>
+          {% else %}
+          	<li role="presentation" {% if request.path == '/' %}class="active"{% endif %}><a href="{{ url_for('register_product') }}">Home</a></li>
+            <li role="presentation" {% if (request.path == '/favorites' or request.path == '/account') %}class="active"{% endif %}>
+            	<a href="#">Profile</a>
+          		<ul class="dropdown-menu" role="menu">
+            		<li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+            		<li><a href="{{ url_for('account') }}">Account</a></li>
+	            </ul>
+        	</li>
+            <li role="presentation" ><a href="{{ url_for('logout') }}" {% if session['provider']=='google' %}onclick="signOut();" {% elif session['provider']=='facebook' %} onclick="facebook_signout();" {% endif %}>Log Out</a></li>
+            <li role="presentation" {% if request.path == '/about' %}class="active"{% endif %}><a href="{{ url_for('about') }}">About</a></li>
+          {% endif %}
+          </ul>
+        </nav>
+        <h3 class="text-muted">PriceReminder</h3>
+      </div>
+
+ 		{% for message in get_flashed_messages() %}
+    		<div class=flash>{{ message }}</div>
+    	{% endfor %}
+    	
+      {% block content %}{% endblock %}
+
+      <footer class="footer">
+        <p>&copy; 2016 by PriceReminder.se</p>
+      </footer>
+
+    </div>
+   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="z-index:1500;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="editModalLabel">Edit favorite</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Price interval: </label>
+            <ul>
+				<li>From</li>
+				<li><input type=number id=price_min value="0" class="price"></li>
+				<li>To</li>
+				<li><input type=number id=price_max  class= "price" placeholder="Alert Price" required></li>
+			</ul>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Update()">Update</button>
+      </div>
+    </div>
+  </div>
+ </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" style="z-index:1500;">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">Do you want to delete it ?!</h4>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="Delete()">Delete</button>
+      </div>
+    </div>
+  </div>
+ </div>
+
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+<!--   <script> -->
+<!-- //   window.fbAsyncInit = function() { -->
+<!-- //   FB.init({ -->
+<!-- //     appId      : '1712246779027050', -->
+<!-- //     cookie     : true,  // enable cookies to allow the server to access  -->
+<!-- //                         // the session -->
+<!-- //     xfbml      : true,  // parse social plugins on this page -->
+<!-- //     version    : 'v2.6' // use graph api version 2.5 -->
+<!-- //   }); -->
+<!-- //   } -->
+<!-- //   function fb_login(){ -->
+<!-- // 	    FB.login(function(response) { -->
+
+<!-- // 	        if (response.authResponse) { -->
+<!-- // 	            console.log(response); // dump complete info -->
+<!-- // 	            access_token = response.authResponse.accessToken; //get access token -->
+<!-- // 	            user_id = response.authResponse.userID; //get FB UID -->
+<!-- // 	            xhr = new XMLHttpRequest(); -->
+<!-- // 	  			xhr.open('POST', 'https://www.pricereminder.se/facebook_login', true); -->
+<!-- // 	  			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); -->
+<!-- // 	  			xhr.onload = function() { -->
+<!-- // 	  			    console.log('Signed in as: ' + xhr.responseText); -->
+<!-- // 	  			  }; -->
+<!-- // 	  			xhr.send('access_token=' + access_token+ "&id=" +user_id); -->
+<!-- // 	  			xhr.onreadystatechange = function(){ -->
+<!-- // 	  			    // process the server response -->
+<!-- // 	  			    if (xhr.readyState === XMLHttpRequest.DONE) { -->
+<!-- // 	      			if (xhr.status === 200) { -->
+<!-- // 	        			window.location.href = ('/favorites'); -->
+<!-- // 	      			} -->
+<!-- // 	  				} -->
+<!-- // 	  			} -->
+
+<!-- // 	        } else { -->
+<!-- // 	            //user hit cancel button -->
+<!-- // 	            console.log('User cancelled login or did not fully authorize.'); -->
+
+<!-- // 	        } -->
+<!-- // 	    }, { -->
+<!-- // 	        scope: 'public_profile,email' -->
+<!-- // 	    }); -->
+<!-- // 	} -->
+<!--   // Load the SDK asynchronously -->
+<!-- //   (function(d, s, id) { -->
+<!-- //     var js, fjs = d.getElementsByTagName(s)[0]; -->
+<!-- //     if (d.getElementById(id)) return; -->
+<!-- //     js = d.createElement(s); js.id = id; -->
+<!-- //     js.src = "//connect.facebook.net/en_US/sdk.js"; -->
+<!-- //     fjs.parentNode.insertBefore(js, fjs); -->
+<!-- //   }(document, 'script', 'facebook-jssdk')); -->
+
+<!-- //   function facebook_signout() { -->
+<!-- // 		FB.logout(function(response) { -->
+<!-- // 			xhr = new XMLHttpRequest(); -->
+<!-- // 			xhr.open('GET', 'https://www.pricereminder.se/logout', true); -->
+<!-- // 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); -->
+<!-- // 			xhr.send(); -->
+<!-- // 	  		console.log('User signed out.'); -->
+<!-- // 			});	 -->
+<!-- // 	} -->
+<!-- </script> -->
+<script>
+       function show_feedback() {
+               document.getElementById("feedback").style.display = "block";
+        }
+        function hide_feedback() {
+               document.getElementById("feedback").style.display = "none";
+        }
+</script>
+</body>
+
+</html>
+

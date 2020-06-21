@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+			<div class="container current" style="width:100%;">
+			<div class="register_warning" >
+			<p style="color:red;">You will be informed by email when price of the product satisfys your requirement. </p>
+			</div>
+			{% if result %}
+			<div class="row">
+						<h3 ><a href="{{ result[2] }}">{{ result[0] }}</a></h3>
+						<h4>Price:</h4>
+						<p>{{ result[4] }}</p>
+						<h4>Description:</h4>
+						<p>{{ result[3] }}</p>
+						<div >
+						<img src="{{ result[1] }}" style="max-width:100%;max-height:100%;"/>
+						</div>
+						<h4>Stock Info: </h4>
+						{% set stores= webhallen_status(result[5]) %}
+						{% for item in stores %}
+						<p>{{ item }}<br></p>
+						{% endfor %}
+
+			</div>
+			{% else %}
+			<h5>You can check all your registered products in your <a href="{{ url_for('favorites') }}">profile</a>.</h5>
+			<h5>If you haven't signed up, <a href="{{ url_for('signup') }}">sign up</a> with the same email.</h5>
+			{% endif %}
+					
+			</div>
+
+{% endblock %}

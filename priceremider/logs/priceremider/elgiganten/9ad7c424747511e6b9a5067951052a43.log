@@ -1,0 +1,82 @@
+2016-09-06 21:05:14 [scrapy] INFO: Scrapy 1.1.1 started (bot: priceremider)
+2016-09-06 21:05:14 [scrapy] INFO: Overridden settings: {'NEWSPIDER_MODULE': 'priceremider.spiders', 'SPIDER_MODULES': ['priceremider.spiders'], 'FEED_URI': 'file:///home/ubuntu/priceremider/items/priceremider/elgiganten/9ad7c424747511e6b9a5067951052a43.jl', 'LOG_FILE': 'logs/priceremider/elgiganten/9ad7c424747511e6b9a5067951052a43.log', 'BOT_NAME': 'priceremider'}
+2016-09-06 21:05:14 [scrapy] INFO: Enabled extensions:
+['scrapy.extensions.feedexport.FeedExporter',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.corestats.CoreStats']
+2016-09-06 21:05:14 [scrapy] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.chunked.ChunkedTransferMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2016-09-06 21:05:14 [scrapy] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2016-09-06 21:05:14 [scrapy] INFO: Enabled item pipelines:
+['priceremider.pipelines.MySQLStorePipeline']
+2016-09-06 21:05:14 [scrapy] INFO: Spider opened
+2016-09-06 21:05:14 [scrapy] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2016-09-06 21:05:14 [scrapy] DEBUG: Telnet console listening on 127.0.0.1:6023
+2016-09-06 21:05:14 [scrapy] DEBUG: Crawled (200) <GET http://www.elgiganten.se/product/vitvaror/tvattmaskin/FW31K7146/electrolux-tvattmaskin-fw31k7146> (referer: None)
+2016-09-06 21:05:14 [elgiganten] DEBUG: A response from http://www.elgiganten.se/product/vitvaror/tvattmaskin/FW31K7146/electrolux-tvattmaskin-fw31k7146 just arrived!
+2016-09-06 21:05:14 [py.warnings] WARNING: priceremider/pipelines.py:74: ScrapyDeprecationWarning: log.msg has been deprecated, create a python logger and log through it instead
+  log.msg("Item stored in db: %s" % item, level=log.DEBUG)
+
+2016-09-06 21:05:14 [scrapy] DEBUG: Item stored in db: {'category': 'Vitvaror',
+ 'company': 'Elgiganten',
+ 'description': 'Denna moderna tv\xc3\xa4ttmaskin fr\xc3\xa5n Electrolux kommer med snabbtv\xc3\xa4tt och en SoftCare trumma f\xc3\xb6r varsam hantering av dina kl\xc3\xa4der.',
+ 'image': 'http://tubby.scene7.com/is/image/tubby/FW31K7146?$prod$',
+ 'price': '3333SEK',
+ 'status': 'Webblager (100+) \n\xc2\xa0\n Boka nu, h\xc3\xa4mta i varuhus om 2 timmar \r\nFinns i lager i',
+ 'title': 'Electrolux Tv\xc3\xa4ttmaskin FW31K7146',
+ 'url': 'http://www.elgiganten.se/product/vitvaror/tvattmaskin/FW31K7146/electrolux-tvattmaskin-fw31k7146'}
+2016-09-06 21:05:14 [scrapy] DEBUG: Scraped from <200 http://www.elgiganten.se/product/vitvaror/tvattmaskin/FW31K7146/electrolux-tvattmaskin-fw31k7146>
+None
+2016-09-06 21:05:14 [scrapy] ERROR: Error caught on signal handler: <bound method ?.item_scraped of <scrapy.extensions.feedexport.FeedExporter object at 0x7f16618a2950>>
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/twisted/internet/defer.py", line 139, in maybeDeferred
+    result = f(*args, **kw)
+  File "/usr/local/lib/python2.7/dist-packages/pydispatch/robustapply.py", line 55, in robustApply
+    return receiver(*arguments, **named)
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/extensions/feedexport.py", line 211, in item_scraped
+    slot.exporter.export_item(item)
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/exporters.py", line 90, in export_item
+    itemdict = dict(self._get_serialized_fields(item))
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/exporters.py", line 65, in _get_serialized_fields
+    field_iter = six.iterkeys(item)
+  File "/usr/lib/python2.7/dist-packages/six.py", line 476, in iterkeys
+    return iter(getattr(d, _iterkeys)(**kw))
+AttributeError: 'NoneType' object has no attribute 'iterkeys'
+2016-09-06 21:05:14 [scrapy] INFO: Closing spider (finished)
+2016-09-06 21:05:14 [scrapy] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 286,
+ 'downloader/request_count': 1,
+ 'downloader/request_method_count/GET': 1,
+ 'downloader/response_bytes': 36319,
+ 'downloader/response_count': 1,
+ 'downloader/response_status_count/200': 1,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2016, 9, 6, 21, 5, 14, 511363),
+ 'item_scraped_count': 1,
+ 'log_count/DEBUG': 5,
+ 'log_count/ERROR': 1,
+ 'log_count/INFO': 7,
+ 'log_count/WARNING': 1,
+ 'response_received_count': 1,
+ 'scheduler/dequeued': 1,
+ 'scheduler/dequeued/memory': 1,
+ 'scheduler/enqueued': 1,
+ 'scheduler/enqueued/memory': 1,
+ 'start_time': datetime.datetime(2016, 9, 6, 21, 5, 14, 235161)}
+2016-09-06 21:05:14 [scrapy] INFO: Spider closed (finished)

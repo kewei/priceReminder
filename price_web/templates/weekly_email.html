@@ -1,0 +1,9 @@
+<p>Dear {{ name }}:</p> 
+<p>Here are the weekly update price of your favorites:</p>
+{% for item in results %} 
+<p><a href="{{ item[0]['url'] }}">{{ item[0]['title'] }}</a> Price: {{ item[0]['price'] }}</p>
+{% endfor %}
+<br>
+<br>
+<p>Your Sincerely，</p>
+<p>PriceReminder Group</p>

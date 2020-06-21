@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+.newpassword label {
+	display:block;
+	padding-left:0;
+	text-align: left !important;
+}
+.newpassword label span{
+	font-weight:normal !important;
+}
+</style>
+	<div class="jumbotron" style="padding-top:20px;">
+	<h4>Account Settings</h4>
+        <form class = "form-signin newpassword" action="{{ url_for('account') }}" method="POST">
+        <label for="inputName"><span>User Name</span></label>
+        <button id="userName" class="form-control btn btn-info">{{ name }}</button>
+        <label for="inputNewPassword" style="padding-top:5px;"><span>New Password</span></label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="New Password">
+        <label for="inputFrequency" style="padding-top:0px;"><span>You will get update reminder every week when the price doesnot satisfy your requirement.</span></label>
+        <select id="frequency" name="frequency" required style="width:100%;">
+			<option value=1>Monday</option>
+			<option value=2>Tuesday</option>
+			<option value=3>Wednesday</option>
+			<option value=4>Thursday</option>
+			<option value=5>Friday</option>
+			<option value=6>Saturday</option>
+			<option value=7>Sunday</option>
+		</select> 
+        <div style="padding-top:5px;"><input type="submit" value='Submit' class="btn btn-sm btn-primary btn-block"></div>
+      </form>
+    </div>
+{% endblock %}

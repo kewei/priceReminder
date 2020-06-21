@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+
+ <div class="register">
+  <div class="jumbotron" style="padding-top:20px; padding-bottom:35px;">
+  {% if error %}
+	<p class=error>
+	<strong>Error:</strong> {{ error }}
+	</p>
+  {% endif %}
+  <h4>Save your time with one click!</h4>
+      <form class="register_prod" action="{{ url_for('register_product') }}" method="POST">
+        <label for="product_name" class="sr-only">Product name</label>
+        <input type="text" name="productname" id="inputName" class="form-control" placeholder="Product Name (optional)" autofocus>
+        <label for="web_address" class="sr-only">Web address of the product</label>
+        <input type="text" name="producturl" id="inputUrl" class="form-control" placeholder="Product's exact web address" required autofocus>
+        {% if not session.logged_in %}
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required>
+        {% endif %}
+        <label for="price_interval" class="sr-only">Price Interval</label>
+			<ul>
+				<li>From</li>
+				<li><input type=number name=price_min value="0" class="price"></li>
+				<li>To</li>
+				<li><input type=number name=price_max  class= "price" placeholder="Alert Price" required></li>
+			</ul>
+			<p style="font-size:14px; color:#337ab7"> You will be informed when the price of your product falls into this interval.</p>
+        <input type="submit" value='Register' class="btn btn-sm btn-primary btn-block">
+      </form>
+  </div>
+  <div>
+  <ul class="assets">
+    <li style="float:left;"><a href="https://chrome.google.com/webstore/detail/pricereminder-plugin/apaboaphfbdinbbpheldnlfpnmabjdic?hl=en-US&gl=SE&authuser=2" >Add our Chrome Extension</a></li>
+    <li  style="float: right;"><a onmouseover="show_feedback()" onclick="hide_feedback()">Feedback</a></li>
+  </ul>
+  </div>
+
+  <div class="feedback" id="feedback">
+  	<form action="{{ url_for('feedback') }}" method="POST">
+		<label>Opinion of our service</label>
+		<select id="soflow" name="opinion" required>
+			<option value="Default">Good or Bad</option>
+			<option value="Good">Like it</option>
+			<option value="Need to be improved">Need to be improved</option>
+		</select>
+			<label for="comment" style="padding-top:5px;" >Comments</label>
+			<textarea name=comments ></textarea>
+			{% if not session.logged_in %}
+			<br>
+			<label for="email">Email</label>
+			<input type=email name=email placeholder="Get gift through it">
+			{% endif %}
+			<div class="smallspace"><input type=submit value='Send'></div>
+	</form>
+  </div>
+ </div>
+{% endblock %} 

@@ -1,0 +1,68 @@
+2016-09-06 21:51:04 [scrapy] INFO: Scrapy 1.1.1 started (bot: priceremider)
+2016-09-06 21:51:04 [scrapy] INFO: Overridden settings: {'NEWSPIDER_MODULE': 'priceremider.spiders', 'SPIDER_MODULES': ['priceremider.spiders'], 'FEED_URI': 'file:///home/ubuntu/priceremider/items/priceremider/elgiganten/0109e97e747c11e6b9a5067951052a43.jl', 'LOG_FILE': 'logs/priceremider/elgiganten/0109e97e747c11e6b9a5067951052a43.log', 'BOT_NAME': 'priceremider'}
+2016-09-06 21:51:04 [scrapy] INFO: Enabled extensions:
+['scrapy.extensions.feedexport.FeedExporter',
+ 'scrapy.extensions.logstats.LogStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.corestats.CoreStats']
+2016-09-06 21:51:04 [scrapy] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.chunked.ChunkedTransferMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2016-09-06 21:51:04 [scrapy] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2016-09-06 21:51:04 [scrapy] INFO: Enabled item pipelines:
+['priceremider.pipelines.MySQLStorePipeline']
+2016-09-06 21:51:04 [scrapy] INFO: Spider opened
+2016-09-06 21:51:04 [scrapy] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2016-09-06 21:51:04 [scrapy] DEBUG: Telnet console listening on 127.0.0.1:6023
+2016-09-06 21:51:04 [scrapy] DEBUG: Crawled (200) <GET http://www.elgiganten.se/product/mobil-tele-gps/mobiltelefoner/APPIPSE64WH/iphone-se-64-gb-silver> (referer: None)
+2016-09-06 21:51:04 [elgiganten] DEBUG: A response from http://www.elgiganten.se/product/mobil-tele-gps/mobiltelefoner/APPIPSE64WH/iphone-se-64-gb-silver just arrived!
+2016-09-06 21:51:04 [scrapy] ERROR: Spider error processing <GET http://www.elgiganten.se/product/mobil-tele-gps/mobiltelefoner/APPIPSE64WH/iphone-se-64-gb-silver> (referer: None)
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/utils/defer.py", line 102, in iter_errback
+    yield next(it)
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/spidermiddlewares/offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/spidermiddlewares/referer.py", line 22, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/spidermiddlewares/urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "/usr/local/lib/python2.7/dist-packages/scrapy/spidermiddlewares/depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "priceremider/spiders/elgiganten.py", line 23, in parse
+    price = product_detail.xpath('div[@id="product-detail-wrapper"]/div/div[@class="product-price align-left any-1-1"]/span/span/text()').extract()[0].strip()
+IndexError: list index out of range
+2016-09-06 21:51:04 [scrapy] INFO: Closing spider (finished)
+2016-09-06 21:51:04 [scrapy] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 287,
+ 'downloader/request_count': 1,
+ 'downloader/request_method_count/GET': 1,
+ 'downloader/response_bytes': 38515,
+ 'downloader/response_count': 1,
+ 'downloader/response_status_count/200': 1,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2016, 9, 6, 21, 51, 4, 404232),
+ 'log_count/DEBUG': 3,
+ 'log_count/ERROR': 1,
+ 'log_count/INFO': 7,
+ 'response_received_count': 1,
+ 'scheduler/dequeued': 1,
+ 'scheduler/dequeued/memory': 1,
+ 'scheduler/enqueued': 1,
+ 'scheduler/enqueued/memory': 1,
+ 'spider_exceptions/IndexError': 1,
+ 'start_time': datetime.datetime(2016, 9, 6, 21, 51, 4, 136696)}
+2016-09-06 21:51:04 [scrapy] INFO: Spider closed (finished)
