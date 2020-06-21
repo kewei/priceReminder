@@ -1,0 +1,42 @@
+body {
+
+}
+hr {
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+}
+a {
+	cursor: pointer;
+}
+.btn {
+	padding-right: 10px;
+}
+.list {
+	padding-left: 30px;
+}
+#pr {
+	padding-top: 10px;
+}
+.form ul li{
+	display: inline;
+}
+.form ul{
+	padding-left: 0;
+}
+.list {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 320px;
+}
+
+ul a {
+	float: left;
+}
+#price_max, #price_min {
+	width: 80px;
+	border: 1px solid #14114d;
+ 	border-radius: 4px;
+}
+#contact {
+	padding-bottom: 10px;
+}

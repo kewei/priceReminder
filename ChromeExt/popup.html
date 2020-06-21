@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+  <head>
+  	<meta charset="utf-8">
+    <title>PriceReminder</title>
+      <script src="googleplus.js"></script>
+      <link href="style.css" rel="stylesheet">
+      <link href="bootstrap-3.3.5.min.css" rel="stylesheet">
+      <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+                width: 350px;
+                background-color: white;
+        }
+
+    </style>
+
+  </head>
+  <body>
+    <h4 style="text-align:center;" id="pr"><a>PriceReminder</a></h4>
+    <hr>
+    <div class="container">
+    	<h6 id="signinLabel">Sign In with:</h6>
+    	<div id="user_info"></div>
+    	<div class="list">
+    	<ul style="display:inline;">
+    		<a class="btn btn-default btn-sm" href="#" id="google" >
+  					<i class="fa fa-google"></i></a>
+<!--   			<a class="btn btn-default btn-sm" href="#" id="facebook" > -->
+<!--   					<i class="fa fa-facebook-square"></i></a> -->
+			<a class="btn btn-default btn-sm" href="#" id="addFavorite" >
+  					<i class="fa fa-heart"></i> Add to your favorites</a>
+  			<a class="btn btn-default btn-sm" href="#" id="revoke">
+  					 Log Out</a>
+  		</ul>
+  		</div>
+  		<hr>
+  		<div class="form">
+  		<form  id="price">
+  			<ul >
+				<li >Send reminder when price is below: </li>
+				<li><input type=number name=price_max  id= "price_max" style ="font-size:12px;" placeholder="Alert Price" required></li>
+			</ul>
+			<hr>
+  		</form>
+  		</div>
+  		<div id="favorite"></div>
+  		<div id="contact" style="text-align:center;">Any questions, please <a id="mailto" href="#">contact us</a>.</div>
+	</div>
+	<script src="jquery-3.0.0.min.js"></script>
+  </body>
+</html> 
