@@ -1,5 +1,5 @@
 # priceReminder
-## This is a project, which scrapes products data from Internet, save to Database. The users can search product information, e.g., price, description, availability, in different stores.
+## This project scrapes products data from Internet, save to Database. The users can search product information, e.g., price, description, availability, in different stores.
 
 ## The project is built on: Flask, Apache, Scrapyd, Celery, Redis
 
