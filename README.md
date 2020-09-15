@@ -3,4 +3,4 @@
 
 ## The project is built on: Flask, Apache, MySQL, Scrapyd, Celery, Redis, Oauth2client
 
-The project has a Google plugin, which allows user to add one product to their account, in order to monitor this product with a certain requirements.
+The project has a Google plugin, which allows user to add one product to their account when one is browsing website, in order to monitor this product with a certain requirements.
